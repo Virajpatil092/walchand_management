@@ -8,6 +8,8 @@ import Footer from "./components/Footer";
 import DirectorHome from './components/DirectorHome';
 import HODHome from './components/HODHome';
 import FacultyHome from './components/FacultyHome';
+import HODupload from './components/HODupload';
+import Facultyupload from './components/Facultyupload';
 import {
   BrowserRouter as Router,
   Routes,
@@ -28,6 +30,8 @@ function App() {
         <Route exact path="/DirectorHome" element={<DirectorHome/>}/>
         <Route exact path="/HODHome" element={<HODHome/>}/>
         <Route exact path="/FacultyHome" element={<FacultyHome/>}/>
+        <Route exact path="/HODupload" element={<HODupload/>}/>
+        <Route exact path="/Facultyupload" element={<Facultyupload/>}/>
       </Routes>
       <Footer/>
       </Router>

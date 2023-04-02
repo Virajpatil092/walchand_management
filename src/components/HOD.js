@@ -38,7 +38,7 @@ const HOD = (props) => {
 			const data = await response.json();
 			console.log(data);
 
-			Navigate('/HODHome')
+			Navigate('/HODHome');
 
 		} catch (error) {
 			console.error(error);

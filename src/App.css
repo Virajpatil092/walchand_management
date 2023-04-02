@@ -5,6 +5,10 @@
   place-items: center center;
 }
 
+#form{
+  max-width: 500px;
+}
+
 #sign-in-form {
   max-width: 330px;
 }
