@@ -1,6 +1,29 @@
 .App {
   text-align: center;
 }
+#main-container {
+  place-items: center center;
+}
+
+#sign-in-form {
+  max-width: 330px;
+}
+
+body{
+  background-color: #f5f7fb;
+}
+
+#year{
+  width: 100%;
+}
+
+#branch{
+  width: 100%;
+}
+
+#course{
+  width: 100%;
+}
 
 .App-logo {
   height: 40vmin;
@@ -10,6 +33,13 @@
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@media (max-width:767px){
+  .center-mobile{
+      display:table;
+      margin:0 auto;
   }
 }
 
