@@ -109,18 +109,32 @@ const DirectorHome = (props) => {
         </div>
 
         <div className="container">
-        {data && (
-            <div>
-            <h2>API Data:</h2>
-            <ul>
-                {data.map(item => (
-                <li key={item.id}>{item.name}</li>
-                ))}
-            </ul>
-            </div>
-        )}
+            {data && (
+                <div>
+                    <h2>API Data:</h2>
+                    <ul>
+                        {data.map(item => (
+                            <li key={item.id}>
+                                <p>Name: {item.name}</p>
+                                <p>Position: {item.position}</p>
+                                <p>Department: {item.department}</p>
+                                <p>Class Name: {item.class_name}</p>
+                                <p>Activity Name: {item.activity_name}</p>
+                                <p>Mode of Attendance: {item.mode_of_attendance}</p>
+                                <p>Description: {item.description}</p>
+                                <p>Start Date: {item.start_date}</p>
+                                <p>End Date: {item.end_date}</p>
+                                <p>Location: {item.location}</p>
+                                <p>Category: {item.category}</p>
+                                <p>Participants Count: {item.participants_count}</p>
+                                <p>Outcomes: {item.outcomes}</p>
+                                <p>File: {item.file}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </div>
+            )}
         </div>
-
         </>
     )
 }
