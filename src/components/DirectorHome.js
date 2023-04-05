@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const DirectorHome = (props) => {
 
-    const [branch, setbranch] = useState('Not selected');
+    const [branch, setbranch] = useState('All');
     const [year, setyear] = useState();
     const [course, setcourse] = useState('null');
     const [data, setData] = useState([]);
@@ -107,32 +107,33 @@ const DirectorHome = (props) => {
         <div className="my-5 d-flex justify-content-center">
             <button type="button" className={`btn btn-primary ${(course === "null")?'disabled':''}`} onClick={handleonclick}>Add Filter</button>
         </div>
-
         <div className="container">
-            {data && (
+            {Array.isArray(data) && data.length ? (
                 <div>
-                    <h2>API Data:</h2>
-                    <ul>
-                        {data.map(item => (
-                            <li key={item.id}>
-                                <p>Name: {item.name}</p>
-                                <p>Position: {item.position}</p>
-                                <p>Department: {item.department}</p>
-                                <p>Class Name: {item.class_name}</p>
-                                <p>Activity Name: {item.activity_name}</p>
-                                <p>Mode of Attendance: {item.mode_of_attendance}</p>
-                                <p>Description: {item.description}</p>
-                                <p>Start Date: {item.start_date}</p>
-                                <p>End Date: {item.end_date}</p>
-                                <p>Location: {item.location}</p>
-                                <p>Category: {item.category}</p>
-                                <p>Participants Count: {item.participants_count}</p>
-                                <p>Outcomes: {item.outcomes}</p>
-                                <p>File: {item.file}</p>
-                            </li>
-                        ))}
-                    </ul>
+                <h2>API Data:</h2>
+                <ul>
+                    {data.map(item => (
+                    <li key={item.id}>
+                        <p>Name: {item.name}</p>
+                        <p>Position: {item.position}</p>
+                        <p>Department: {item.department}</p>
+                        <p>Class Name: {item.class_name}</p>
+                        <p>Activity Name: {item.activity_name}</p>
+                        <p>Mode of Attendance: {item.mode_of_attendance}</p>
+                        <p>Description: {item.description}</p>
+                        <p>Start Date: {item.start_date}</p>
+                        <p>End Date: {item.end_date}</p>
+                        <p>Location: {item.location}</p>
+                        <p>Category: {item.category}</p>
+                        <p>Participants Count: {item.participants_count}</p>
+                        <p>Outcomes: {item.outcomes}</p>
+                        <p>File: {item.file}</p>
+                    </li>
+                    ))}
+                </ul>
                 </div>
+            ) : (
+                <div>No data available</div>
             )}
         </div>
         </>
