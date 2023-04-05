@@ -4,19 +4,20 @@ import axios from 'axios';
 
 const FacultyHome = () => {
     const Navigate = useNavigate();
-    const [eventData, setEventData] = useState(null);
+    const [eventData, setEventData] = useState([]);
     const url = 'http://localhost:8000/forms/getdepartmentwise';
+
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            const response = await axios.get(url);
-            setEventData(response.data);
-          } catch (error) {
-            console.error(error);
-          }
+            try {
+                const response = await axios.get(url);
+                setEventData(response.data);
+            } catch (error) {
+                console.error(error);
+            }
         };
         fetchData();
-      }, []);
+    }, []);
 
     const handleOnClick = () => {
         Navigate('/Facultyupload');
@@ -50,5 +51,6 @@ const FacultyHome = () => {
         </div>
     );
 };
+
 
 export default FacultyHome;

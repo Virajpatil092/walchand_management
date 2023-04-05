@@ -4,37 +4,34 @@ import axios from 'axios';
 
 const HODHome = () => {
     const Navigate = useNavigate();
-    const [eventData, setEventData] = useState(null);
-    const url = 'http://localhost:8000/forms/getdepartmentwise';
+    const [eventData, setEventData] = useState([]);
+    const url = 'http://localhost:8000/forms/getbranchwise';
+
     useEffect(() => {
         const fetchData = async () => {
-          try {
-            const response = await axios.get(url);
-            setEventData(response.data);
-          } catch (error) {
-            console.error(error);
-          }
+            try {
+                const response = await axios.get(url);
+                setEventData(response.data);
+                console.log(response);
+            } catch (error) {
+                console.error(error);
+            }
         };
         fetchData();
-      }, []);
+    }, []);
 
     const handleOnClick = () => {
-        Navigate('/HODupload');
+        Navigate('/Facultyupload');
     };
 
     return (
-        <>
         <div className="d-flex flex-column align-items-center justify-content-center h-100 position-relative">
             <div className="position-absolute top-0 start-0 m-3" style={{ left: '20px' }}>
                 <button onClick={handleOnClick} type="button" className="btn btn-primary">
                     Upload New Event
                 </button>
             </div>
-        </div>
-
-        <div className="container my-5">
-
-        {eventData && (
+            {eventData && (
                 <div className="mt-5">
                     <h2>Event Details</h2>
                     <p>Name: {eventData.name}</p>
@@ -52,11 +49,9 @@ const HODHome = () => {
                     <p>Outcomes: {eventData.outcomes}</p>
                 </div>
             )}
-
         </div>
-
-        </>
     );
 };
+
 
 export default HODHome;

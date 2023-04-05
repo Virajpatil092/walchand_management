@@ -22,24 +22,28 @@ const Facultyupload = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('position', position);
-        formData.append('department', department);
-        formData.append('class_name', className);
-        formData.append('activity_name', activityName);
-        formData.append('mode_of_attendance', modeOfAttendance);
-        formData.append('description', description);
-        formData.append('start_date', startDate);
-        formData.append('end_date', endDate);
-        formData.append('location', location);
-        formData.append('category', category);
-        formData.append('participants_count', participantsCount);
-        formData.append('outcomes', outcomes);
-        formData.append('file', file);
+        
+        let formData = {
+          'name': name,
+          'position': position,
+          'department': department,
+          'class_name': className,
+          'activity_name': activityName,
+          'mode_of_attendance': modeOfAttendance,
+          'description': description,
+          'start_date': startDate,
+          'end_date': endDate,
+          'location': location,
+          'category': category,
+          'participants_count': participantsCount,
+          'outcomes': outcomes,
+          'file': file
+      };
+
+        const url = 'http://localhost:8000/forms/create';
 
         try {
-            const response = await fetch('', {
+            const response = await fetch(url, {
                 method: 'POST',
                 body: formData
             });

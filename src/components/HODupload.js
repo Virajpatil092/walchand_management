@@ -41,7 +41,7 @@ const HODupload = (props) => {
 
       console.log(formData);
 
-      const url = 'http://localhost:8000';
+      const url = 'http://localhost:8000/forms/create';
 
       try {
           const response = await fetch(url, {

@@ -44,7 +44,7 @@ const Faculty = (props) => {
 		e.preventDefault();
 	
 		try {
-			const response = await fetch('/users/login', {
+			const response = await fetch('http://localhost:8000/users/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
