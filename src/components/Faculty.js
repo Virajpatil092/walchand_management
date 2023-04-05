@@ -12,7 +12,7 @@ const Faculty = (props) => {
 	const [pass, setpass] = useState('');
 	const [branch,setbranch] = useState('');
 
-	//To keep track of email
+	// To keep track of email
 	const handleemail = (event) =>{
 		setemail(event.target.value);
 	}

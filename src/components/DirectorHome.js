@@ -1,46 +1,52 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const DirectorHome = (props) => {
+  const [branch, setbranch] = useState('All');
+  const [year, setyear] = useState();
+  const [course, setcourse] = useState('null');
+  const [data, setData] = useState(null);
 
-    const [branch, setbranch] = useState('All');
-    const [year, setyear] = useState();
-    const [course, setcourse] = useState('null');
-    const [data, setData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get('http://localhost:8000/forms/get');
+        setData(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+  }, []);
 
-    const handlebranch = (event) =>{
-        setbranch(event.target.value);
-        console.log(branch);
+  const handlebranch = (event) => {
+    setbranch(event.target.value);
+  };
+
+  const handleyear = (event) => {
+    setyear(event.target.value);
+  };
+
+  const handlecourse = (event) => {
+    setcourse(event.target.value);
+  };
+
+  const handleonclick = async (event) => {
+    event.preventDefault();
+
+    const url = 'http://localhost:8000/forms/getspecific';
+
+    try {
+      const response = await axios.post(url, {
+        course,
+        branch,
+        year,
+      });
+      setData(response.data);
+    } catch (error) {
+      console.error(error);
     }
-
-    const handleyear = (event) =>{
-        setyear(event.target.value);
-        console.log(year);
-    }
-
-    const handlecourse = (event) =>{
-        setcourse(event.target.value);
-        console.log(course);
-    }
-
-    const handleonclick = async (event) => {
-        event.preventDefault();
-
-        const url = 'http://localhost:8000/forms/getspecific';
-
-        try {
-            const response = await axios.post(url, {
-                course,
-                branch,
-                year,
-            });
-            setData(response.data);
-        } catch (error) {
-            
-        }
-    }
-
+  };
     return (
         <>
         <div className="d-flex p-3">
@@ -108,34 +114,28 @@ const DirectorHome = (props) => {
             <button type="button" className={`btn btn-primary ${(course === "null")?'disabled':''}`} onClick={handleonclick}>Add Filter</button>
         </div>
         <div className="container">
-            {Array.isArray(data) && data.length ? (
-                <div>
+            {data ? 
+                <div className='my-5'>
                 <h2>API Data:</h2>
-                <ul>
-                    {data.map(item => (
-                    <li key={item.id}>
-                        <p>Name: {item.name}</p>
-                        <p>Position: {item.position}</p>
-                        <p>Department: {item.department}</p>
-                        <p>Class Name: {item.class_name}</p>
-                        <p>Activity Name: {item.activity_name}</p>
-                        <p>Mode of Attendance: {item.mode_of_attendance}</p>
-                        <p>Description: {item.description}</p>
-                        <p>Start Date: {item.start_date}</p>
-                        <p>End Date: {item.end_date}</p>
-                        <p>Location: {item.location}</p>
-                        <p>Category: {item.category}</p>
-                        <p>Participants Count: {item.participants_count}</p>
-                        <p>Outcomes: {item.outcomes}</p>
-                        <p>File: {item.file}</p>
-                    </li>
-                    ))}
-                </ul>
+                <p>Name: {data.name}</p>
+                <p>Position: {data.position}</p>
+                <p>Department: {data.department}</p>
+                <p>Class Name: {data.class_name}</p>
+                <p>Activity Name: {data.activity_name}</p>
+                <p>Mode of Attendance: {data.mode_of_attendance}</p>
+                <p>Description: {data.description}</p>
+                <p>Start Date: {data.start_date}</p>
+                <p>End Date: {data.end_date}</p>
+                <p>Location: {data.location}</p>
+                <p>Category: {data.category}</p>
+                <p>Participants Count: {data.participants_count}</p>
+                <p>Outcomes: {data.outcomes}</p>
+                <p>File: {data.file}</p>
                 </div>
-            ) : (
-                <div>No data available</div>
-            )}
-        </div>
+                :
+                <p>No data available</p>
+            }
+            </div>
         </>
     )
 }

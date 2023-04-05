@@ -21,37 +21,46 @@ const HODupload = (props) => {
     const [file, setFile] = useState(null);
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
-        const formData = new FormData();
-        formData.append('name', name);
-        formData.append('position', position);
-        formData.append('department', department);
-        formData.append('class_name', className);
-        formData.append('activity_name', activityName);
-        formData.append('mode_of_attendance', modeOfAttendance);
-        formData.append('description', description);
-        formData.append('start_date', startDate);
-        formData.append('end_date', endDate);
-        formData.append('location', location);
-        formData.append('category', category);
-        formData.append('participants_count', participantsCount);
-        formData.append('outcomes', outcomes);
-        formData.append('file', file);
+      event.preventDefault();
+      let formData = {
+          'name': name,
+          'position': position,
+          'department': department,
+          'class_name': className,
+          'activity_name': activityName,
+          'mode_of_attendance': modeOfAttendance,
+          'description': description,
+          'start_date': startDate,
+          'end_date': endDate,
+          'location': location,
+          'category': category,
+          'participants_count': participantsCount,
+          'outcomes': outcomes,
+          'file': file
+      };
 
-        try {
-            const response = await fetch('', {
-                method: 'POST',
-                body: formData
-            });
-            const data = await response.json();
-            console.log(data);
+      console.log(formData);
 
-            Navigate('/HODHome');
-        } catch (error) {
-            console.error(error);
-        }
-    };
+      const url = 'http://localhost:8000';
 
+      try {
+          const response = await fetch(url, {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(formData)
+          });
+          const data = await response.json();
+          console.log(data);
+  
+          Navigate('/HODHome');
+      } catch (error) {
+          console.error(error);
+      }
+  };
+  
+  
     return (
         <div id="main-container" className="container d-grid h-100 my-5 my-3">
             <Form id='form' className="text p-3 w-100 shadow-lg p-4 mb-4 bg-white my-3" onSubmit={handleSubmit}>
