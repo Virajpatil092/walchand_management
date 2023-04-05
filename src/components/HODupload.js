@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 
-const HODupload = () => {
+const HODupload = (props) => {
     const Navigate = useNavigate();
 
     const [name, setName] = useState('');
     const [position, setPosition] = useState('');
-    const [department, setDepartment] = useState('');
+    const [department, setDepartment] = useState();
     const [className, setClassName] = useState('');
     const [activityName, setActivityName] = useState('');
     const [modeOfAttendance, setModeOfAttendance] = useState('');
@@ -75,21 +75,27 @@ const HODupload = () => {
                         onChange={(event) => setPosition(event.target.value)}
                     />
                 </Form.Group>
-                <Form.Group>
-                    <Form.Label>Department</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter department"
-                        value={department}
-                        className='my-3'
-                        onChange={(event) => setDepartment(event.target.value)}
-                    />
+                <Form.Group className="mb-4" controlId="sign-in-password">
+                    <div className="text-left opacity-75">
+                        Department*
+                    </div>
+                    <select className="form-select" 
+                    aria-label="Default select example" 
+                    onChange={(event) => setDepartment(event.target.value)}>
+                        <option value='null'>Select Department</option>
+                        <option value="CSE">CSE</option>
+                        <option value="IT">IT</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="Mechinical">Mechinical</option>
+                        <option value="Civil">Civil</option>
+                    </select>
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Class Name</Form.Label>
                     <Form.Control
                         type="text"
-                        placeholder="Enter class name"
+                        placeholder="Enter class name (for students)"
                         value={className}
                         className='my-3'
                         onChange={(event) => setClassName(event.target.value)}
@@ -152,7 +158,7 @@ const HODupload = () => {
               <Form.Group>
                 <Form.Label>Category</Form.Label>
                 <Form.Control as="select" className="my-3" value={category} onChange={(event) => setCategory(event.target.value)}>
-                  <option value="">Select category</option>
+                  <option value="null">Select category</option>
                   <option value="academics">Academics</option>
                   <option value="community service">Community Service</option>
                   <option value="sports">Sports</option>
@@ -182,7 +188,7 @@ const HODupload = () => {
                 />
               </Form.Group>
               <Form.Group>
-                <Form.Label>File</Form.Label>
+                <Form.Label>File (limit 1)</Form.Label>
                 <Form.Control
                   type="file"
                   className='my-3'

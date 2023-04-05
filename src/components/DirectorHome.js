@@ -4,7 +4,7 @@ import axios from 'axios';
 
 const DirectorHome = (props) => {
 
-    const [branch, setbranch] = useState();
+    const [branch, setbranch] = useState('Not selected');
     const [year, setyear] = useState();
     const [course, setcourse] = useState('null');
     const [data, setData] = useState([]);
@@ -26,15 +26,18 @@ const DirectorHome = (props) => {
 
     const handleonclick = async (event) => {
         event.preventDefault();
+
+        const url = 'http://localhost:8000/forms/getspecific';
+
         try {
-            const response = await axios.post('', {
+            const response = await axios.post(url, {
                 course,
                 branch,
                 year,
             });
             setData(response.data);
         } catch (error) {
-            console.error(error);
+            
         }
     }
 

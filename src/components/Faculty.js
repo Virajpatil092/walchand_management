@@ -2,10 +2,12 @@ import React from 'react';
 import { Form } from 'react-bootstrap';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Alert from './Alert';
 
 const Faculty = (props) => {
 	const Navigate = useNavigate();
 
+	const [alert, setAlert] = useState(null);
 	const [email, setemail] = useState('');
 	const [pass, setpass] = useState('');
 	const [branch,setbranch] = useState('');
@@ -24,11 +26,25 @@ const Faculty = (props) => {
 		setbranch(event.target.value);
 	}
 
+	const showAlert = (message,type)=>{
+		//to set type of alert and message of alert
+	  setAlert({
+		msg:message,
+		type:type
+	  });
+
+	  //show for only 1 second
+
+	  setTimeout(() => {
+		setAlert(null);
+	  }, 1000);
+	}
+
 	const handleonclick = async (e) =>{
 		e.preventDefault();
 	
 		try {
-			const response = await fetch('/api/Dirlogin', {
+			const response = await fetch('/users/login', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
@@ -36,17 +52,16 @@ const Faculty = (props) => {
 				body: JSON.stringify({ email, password: pass, branch})
 			});
 			const data = await response.json();
-			console.log(data);
 
 		Navigate('/FacultyHome')
 		} catch (error) {
-			console.error(error);
+			showAlert("Username and Password dosen't match","danger");
 		}
 	}
 
     return (
 	    <div id="main-container" className="container d-grid h-100 my-5">
-	      <Form id="sign-in-form" className="text-center p-3 w-100 shadow-lg p-4 mb-4 bg-white" onClick={handleonclick}>
+	      <Form id="sign-in-form" className="text-center p-3 w-100 shadow-lg p-4 mb-4 bg-white">
 
 		<h6 className="text-left my-4 opacity-75">Faculty Login</h6>
 
@@ -84,9 +99,11 @@ const Faculty = (props) => {
 		</select>
 		</Form.Group>
 		<br />
+		
+		<Alert alert={alert}/>
 
 		<div className="mb-4 d-grid">
-			<button type="button" className={`btn btn-primary ${(email === '' || pass === '' || branch === "Select" || branch ==="")?'disabled':''}`} >Sign-in</button>
+			<button type="button" onClick={handleonclick} className={`btn btn-primary ${(email === '' || pass === '' || branch === "Select" || branch ==="")?'disabled':''}`} >Sign-in</button>
 		</div>
 	      </Form>
 	    </div>
