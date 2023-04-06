@@ -19,7 +19,6 @@ const DirectorHome = (props) => {
         const response = await axios.post('http://localhost:8000/users/login', {
           token,
         });
-        console.log(response.data);
       } catch (error) {
         console.error(error);
         Navigate('/Director');
@@ -36,8 +35,6 @@ const DirectorHome = (props) => {
       try {
         const response = await axios.get('http://localhost:8000/forms/get');
         setData(response.data);
-
-        console.log(response.data);
 
       } catch (error) {
         console.error(error);
@@ -64,7 +61,7 @@ const DirectorHome = (props) => {
     const url = 'http://localhost:8000/forms/getspecific';
 
     try {
-      const response = await axios.get(url, {
+      const response = await axios.post(url, {
         course,
         department,
         class_name,
@@ -78,7 +75,6 @@ const DirectorHome = (props) => {
     return (
         <>
         <div className="d-flex p-3">
-
 
             <select id="course" className="form-select mx-2" aria-label="Default select example" onChange={handlecourse}>
             <option value="null">Select Course</option>
@@ -128,26 +124,26 @@ const DirectorHome = (props) => {
             {course === 'Degree'?
                 <>
                     <option value="null">Select Year</option>
-                    <option value="fy">First Year</option>
-                    <option value="sy">Second Year</option>
-                    <option value="ty">Third Year</option>
-                    <option value="Btech">Final Year</option>
+                    <option value="First Year">First Year</option>
+                    <option value="Second Year">Second Year</option>
+                    <option value="Third Year">Third Year</option>
+                    <option value="Final Year">Final Year</option>
                 </>
                 :
                 (course === 'Diploma')?
                 <>
                     <option value="null">Select Year</option>
-                    <option value="fy">First Year</option>
-                    <option value="sy">Second Year</option>
-                    <option value="ty">Third Year</option>
+                    <option value="First Year">First Year</option>
+                    <option value="Second Year">Second Year</option>
+                    <option value="Third Year">Third Year</option>
                 </>
                 :
                 (course === 'PG')?
                 <>
                     <option value="null">Select Year</option>
-                    <option value="fy">First Year</option>
-                    <option value="sy">Second Year</option>
-                    <option value="ty">Third Year</option>
+                    <option value="First Year">First Year</option>
+                    <option value="Second Year">Second Year</option>
+                    <option value="Third Year">Third Year</option>
                 </>
                 :
                 <option value="null">Select Year</option>
