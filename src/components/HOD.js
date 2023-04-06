@@ -8,13 +8,18 @@ const HOD = (props) => {
     const Navigate = useNavigate();
 
 	const [alert, setAlert] = useState(null);
-    const [email, setemail] = useState('');
+    // const [email, setemail] = useState('');
+    const [username, setusername] = useState('')
     const [pass, setpass] = useState('');
     const [branch,setbranch] = useState('');
 
     //To keep track of email
-    const handleemail = (event) =>{
-        setemail(event.target.value);
+    // const handleemail = (event) =>{
+    //     setemail(event.target.value);
+    // }
+
+    const handleusername = (event) =>{
+      setusername(event.target.value);
     }
 
     //to keep track of pass
@@ -42,23 +47,36 @@ const HOD = (props) => {
 
     const handleonclick = async (e) =>{
         e.preventDefault();
-    
+
+        const url = 'http://localhost:8000/users/login';
+
         try {
-            const response = await fetch('http://localhost:8000/users/login', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ email, password: pass, branch})
-            });
+
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password: pass, branch})
+        });
             const data = await response.json();
 
+            console.log(response);
+        
+            const token = data.token;
 
-            Navigate('/HODHome');
-
-        } catch (error) {
-			showAlert("Username and Password dosen't match","danger");
-        }
+            if (token) {
+              // Store JWT token in local storage
+              localStorage.setItem('token', token);
+        
+              // Redirect user to home page
+              Navigate('/HODHome', { state: { branch } });
+            } else {
+              showAlert("Username and Password doesn't match", "danger");
+            }
+          } catch (error) {
+            showAlert("An error occurred while logging in", "danger");
+          }
     }
 
     return (
@@ -71,7 +89,7 @@ const HOD = (props) => {
                     <div className="text-left opacity-75">
                         Username*
                     </div>
-                    <Form.Control type="email" onChange={handleemail} size="md" placeholder="Username" autoComplete="username" className="position-relative" />
+                    <Form.Control type="email" onChange={handleusername} size="md" placeholder="Username" autoComplete="username" className="position-relative" />
                 </Form.Group>
                 <br />
 
@@ -91,7 +109,7 @@ const HOD = (props) => {
                         Department*
                     </div>
                     <select className="form-select" aria-label="Default select example" onChange={handlebranch}>
-                        <option value="null">Select-Department</option>
+                        <option >Select-Department</option>
                         <option value="CSE">CSE</option>
                         <option value="IT">IT</option>
                         <option value="Electronics">Electronics</option>
@@ -105,7 +123,7 @@ const HOD = (props) => {
 		        <Alert alert={alert}/>
 
                 <div className="mb-4 d-grid">
-                    <button type="button" onClick={handleonclick} className={`btn btn-primary ${(email === '' || pass === '' || branch === "Select" || branch ==="")?'disabled':''}`} >Sign-in</button>
+                    <button type="button" onClick={handleonclick} className={`btn btn-primary ${(username === '' || pass === '' || branch === "Select" || branch ==="")?'disabled':''}`} >Sign-in</button>
 		</div>
 	      </Form>
 	    </div>

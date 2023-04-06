@@ -74,15 +74,14 @@ const HODupload = (props) => {
                         onChange={(event) => setName(event.target.value)}
                     />
                 </Form.Group>
-                <Form.Group>
-                    <Form.Label>Position</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter position"
-                        value={position}
-                        className='my-3'
-                        onChange={(event) => setPosition(event.target.value)}
-                    />
+                <Form.Group className='my-4'>
+                    <Form.Label>Position*</Form.Label>
+                    <select className="form-select" aria-label="Default select example"  onChange={(event) => setPosition(event.target.value)}>
+                        <option value='null'>Select Position</option>
+                        <option value="student">Student</option>
+                        <option value="faculty">Faculty</option>
+                        <option value="non_teaching_staff">Non Teaching Staff</option>
+                    </select>
                 </Form.Group>
                 <Form.Group className="mb-4" controlId="sign-in-password">
                     <div className="text-left opacity-75">
@@ -100,15 +99,19 @@ const HODupload = (props) => {
                         <option value="Civil">Civil</option>
                     </select>
                 </Form.Group>
-                <Form.Group>
-                    <Form.Label>Class Name</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="Enter class name (for students)"
-                        value={className}
-                        className='my-3'
-                        onChange={(event) => setClassName(event.target.value)}
-                    />
+                <Form.Group className="mb-4" controlId="sign-in-password">
+                    <div className="text-left opacity-75">
+                        Class (for student)*
+                    </div>
+                    <select className="form-select" 
+                    aria-label="Default select example" 
+                    onChange={(event) => setClassName(event.target.value)}>
+                        <option value='null'>Select class</option>
+                        <option value="First Year">First Year</option>
+                        <option value="Second Year">Second Year</option>
+                        <option value="Third Year">Third Year</option>
+                        <option value="Final Year">Final Year</option>
+                    </select>
                 </Form.Group>
                 <Form.Group>
                     <Form.Label>Activity Name</Form.Label>

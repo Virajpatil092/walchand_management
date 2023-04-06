@@ -53,7 +53,11 @@ const Faculty = (props) => {
 			});
 			const data = await response.json();
 
-		Navigate('/FacultyHome')
+			Navigate({
+                pathname: '/FacultyHome',
+                state: { branch }
+            });
+
 		} catch (error) {
 			showAlert("Username and Password dosen't match","danger");
 		}

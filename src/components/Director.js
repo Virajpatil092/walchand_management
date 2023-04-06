@@ -7,15 +7,19 @@ const Director = (props) => {
 
 	const Navigate = useNavigate();
 
-	const branch = 'Director';
-
 	const [alert, setAlert] = useState(null);
-	const [email, setemail] = useState('');
+	const [username, setusername] = useState('');
+	// const [email, setemail] = useState('');
 	const [pass, setpass] = useState('');	
+	const [branch, setbranch] = useState('Director');
 
 	//To keep track of email	
-	const handleemail = (event) =>{
-		setemail(event.target.value);
+	// const handleemail = (event) =>{
+	// 	setemail(event.target.value);
+	// }
+
+	const handleusername = (event) =>{
+		setusername(event.target.value);
 	}
 
 	//to keep track of pass
@@ -37,28 +41,39 @@ const Director = (props) => {
 	  }, 1000);
 	}
 
-	const handleonclick = async (e) =>{
+	const handleOnClick = async (e) => {
 		e.preventDefault();
-
+	  
 		const url = 'http://localhost:8000/users/login';
-	
-		try {
-			const response = await fetch(url, {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ email, password: pass , branch})
-			});
-			const data = await response.json();
 
-			Navigate('/DirectorHome')
+        try {
 
+          const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password: pass, branch})
+        });
+            const data = await response.json();
+
+            console.log(response);
+        
+            const token = data.token;
+		  if (token) {
+			// Store JWT token in local storage
+			localStorage.setItem('token', token);
+	  
+			// Redirect user to home page
+			Navigate('/DirectorHome');
+		  } else {
+			showAlert("Username and Password doesn't match", "danger");
+		  }
 		} catch (error) {
-			showAlert("Username and Password dosen't match","danger");
+		  showAlert("An error occurred while logging in", "danger");
+		  console.log(error);
 		}
-	}
-
+	  };
 
     return (
 	    <div id="main-container" className="container d-grid h-100 my-5">
@@ -70,7 +85,7 @@ const Director = (props) => {
 			<div className="text-left opacity-75">
 				Username*
 			</div>
-		  <Form.Control type="email" onChange={handleemail} size="md" placeholder="Username" autoComplete="username" className="position-relative" />
+		  <Form.Control type="email" onChange={handleusername} size="md" placeholder="Username" autoComplete="username" className="position-relative" />
 		</Form.Group>
 		<br />
 
@@ -89,7 +104,7 @@ const Director = (props) => {
 		<Alert alert={alert}/>
 
 		<div className="mb-4 d-grid">
-			<button type="button" onClick={handleonclick} className={`btn btn-primary ${(email === '' || pass === '')?'disabled':''}`} >Sign-in</button>
+			<button type="button" onClick={handleOnClick} className={`btn btn-primary ${(username === '' || pass === '')?'disabled':''}`} >Sign-in</button>
 		</div>
 	      </Form>
 	    </div>

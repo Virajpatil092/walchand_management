@@ -1,13 +1,37 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+// import jwt_decode from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 
 const DirectorHome = (props) => {
+  const Navigate = useNavigate();
   const [department, setdepartment] = useState('All');
   const [class_name, setclass_name] = useState();
   const [course, setcourse] = useState('null');
   const [data, setData] = useState([]);
 
   useEffect(() => {
+
+    const token = localStorage.getItem('token');
+
+    const verifyToken = async () => {
+      try {
+        const response = await axios.post('http://localhost:8000/users/login', {
+          token,
+        });
+        console.log(response.data);
+      } catch (error) {
+        console.error(error);
+        Navigate('/Director');
+      }
+    };
+    
+    if (token) {
+        Navigate('/DirectorHome');
+    } else {
+      verifyToken();
+    }
+
     const fetchData = async () => {
       try {
         const response = await axios.get('http://localhost:8000/forms/get');
@@ -46,7 +70,7 @@ const DirectorHome = (props) => {
         class_name,
       });
       setData(response.data);
-      console.log(response.data);
+      
     } catch (error) {
       console.error(error);
     }
@@ -58,8 +82,9 @@ const DirectorHome = (props) => {
 
             <select id="course" className="form-select mx-2" aria-label="Default select example" onChange={handlecourse}>
             <option value="null">Select Course</option>
-			<option value="Degree">Degree</option>
-			<option value="Diploma">Diploma</option>
+            <option value="Degree">Degree</option>
+            <option value="Diploma">Diploma</option>
+            <option value="PG">PG</option>
             </select>
 
             <select id="department" className="form-select mx-2" aria-label={`${(course==="null")?'Disabled':'Default'} select example`} onChange={handledepartment} disabled={course === "null"}>
@@ -76,6 +101,15 @@ const DirectorHome = (props) => {
                 </>
                 :
                 (course === 'Diploma')?
+                <>
+                <option value="null">Select department</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Electrical">Electrical</option>
+                <option value="Mechinical">Mechinical</option>
+                <option value="Civil">Civil</option>
+                </>
+                :
+                (course === 'PG')?
                 <>
                 <option value="null">Select department</option>
                 <option value="Electronics">Electronics</option>
@@ -108,6 +142,14 @@ const DirectorHome = (props) => {
                     <option value="ty">Third Year</option>
                 </>
                 :
+                (course === 'PG')?
+                <>
+                    <option value="null">Select Year</option>
+                    <option value="fy">First Year</option>
+                    <option value="sy">Second Year</option>
+                    <option value="ty">Third Year</option>
+                </>
+                :
                 <option value="null">Select Year</option>
                 }
 
@@ -117,12 +159,12 @@ const DirectorHome = (props) => {
         <div className="my-5 d-flex justify-content-center">
             <button type="button" className={`btn btn-primary ${(course === "null")?'disabled':''}`} onClick={handleonclick}>Add Filter</button>
         </div>
-        <div className="container">
+        <div className="container text-center">
           {data ? (
-            <div className="my-5">
+            <div className='my-5'>
             <h2>API Data:</h2>
             {data.map((item) => (
-              <div key={item.id}>
+              <div className='my-5 api-item border shadow-lg h5' key={item.id}>
                 <p>Name: {item.name}</p>
                 <p>Position: {item.position}</p>
                 <p>Department: {item.department}</p>
@@ -140,11 +182,11 @@ const DirectorHome = (props) => {
               </div>
             ))}
           </div>
-        ) : (
+          ) : (
           <p>No data available</p>
-        )}
-
-            </div>
+          )}
+        </div>
+        <hr />
         </>
     )
 }
