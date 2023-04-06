@@ -159,29 +159,52 @@ const DirectorHome = (props) => {
         <div className="my-5 d-flex justify-content-center">
             <button type="button" className={`btn btn-primary ${(course === "null")?'disabled':''}`} onClick={handleonclick}>Add Filter</button>
         </div>
-        <div className="container text-center">
+        <div className="">
           {data ? (
             <div className='my-5'>
             <h2>API Data:</h2>
+            <ul class="responsive-table">
+                    <li className="table-header">
+                      <div className="col col-1">Name</div>
+                      <div className="col col-2">Position</div>
+                      <div className="col col-3">Department</div>
+                      <div className="col col-4">Class Name</div>
+                      <div className="col col-5">Activity Name</div>
+                      <div className="col col-6">Mode of Attendance</div>
+                      <div className="col col-7">Description</div>
+                      <div className="col col-8">Start Date</div>
+                      <div className="col col-9">End Date</div>
+                      <div className="col col-10">Location</div>
+                      <div className="col col-11">Category</div>
+                      <div className="col col-12">Participants Count</div>
+                      <div className="col col-13">Outcomes</div>
+                      <div className="col col-14">File</div>
+                    </li>
+              </ul>
             {data.map((item) => (
               <div className='my-5 api-item border shadow-lg h5' key={item.id}>
-                <p>Name: {item.name}</p>
-                <p>Position: {item.position}</p>
-                <p>Department: {item.department}</p>
-                <p>Class Name: {item.class_name}</p>
-                <p>Activity Name: {item.activity_name}</p>
-                <p>Mode of Attendance: {item.mode_of_attendance}</p>
-                <p>Description: {item.description}</p>
-                <p>Start Date: {item.start_date}</p>
-                <p>End Date: {item.end_date}</p>
-                <p>Location: {item.location}</p>
-                <p>Category: {item.category}</p>
-                <p>Participants Count: {item.participants_count}</p>
-                <p>Outcomes: {item.outcomes}</p>
-                <p>File: {item.file}</p>
+                  <ul className="responsive-table">
+                    <li className="table-row">      
+                      <div className="col col-1" >{item.name}</div>
+                      <div className="col col-2" >{item.position}</div>
+                      <div className="col col-3" >{item.department}</div>
+                      <div className="col col-4" >{item.activity_name}</div>
+                      <div className="col col-5" >{item.mode_of_attendance}</div>
+                      <div className="col col-6" >{item.description}</div>
+                      <div className="col col-7" >{item.department}</div>
+                      <div className="col col-8" >{item.start_date}</div>
+                      <div className="col col-9" >{item.end_date}</div>
+                      <div className="col col-10" >{item.location}</div>
+                      <div className="col col-11" >{item.category}</div>
+                      <div className="col col-12" >{item.participants_count}</div>
+                      <div className="col col-13" >{item.outcomes}</div>
+                      <div className="col col-14" >{item.file}</div>
+                    </li>
+                  </ul>
               </div>
             ))}
           </div>
+
           ) : (
           <p>No data available</p>
           )}
