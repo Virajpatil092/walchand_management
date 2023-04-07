@@ -70,7 +70,9 @@ const HOD = (props) => {
               localStorage.setItem('token', token);
         
               // Redirect user to home page
-              Navigate('/HODHome', { state: { branch } });
+              localStorage.setItem('branch', branch);
+
+              Navigate('/HODHome');
             } else {
               showAlert("Username and Password doesn't match", "danger");
             }

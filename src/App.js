@@ -33,7 +33,7 @@ function App() {
         <Route exact path="/HODupload" element={<HODupload/>}/>
         <Route exact path="/Facultyupload" element={<Facultyupload/>}/>
       </Routes>
-      {/* <Footer/> */}
+      <Footer/>
       </Router>
     </>
   )

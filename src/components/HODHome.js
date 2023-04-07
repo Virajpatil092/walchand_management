@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
 
 
 const HODHome = (props) => {
@@ -9,11 +8,8 @@ const HODHome = (props) => {
     const [data, setdata] = useState([]);
     const url = 'http://localhost:8000/forms/getbranchwise';
 
-  const location = useLocation();
-  const branch = location.state?.branch;
-
     useEffect(() => {
-
+        const department = localStorage.getItem('branch');
         const token = localStorage.getItem('token');
 
         const verifyToken = async () => {
@@ -21,7 +17,6 @@ const HODHome = (props) => {
             const response = await axios.post('http://localhost:8000/users/login', {
               token,
             });
-            console.log(response.data);
           } catch (error) {
             console.error(error);
             Navigate('/HOD');
@@ -35,20 +30,19 @@ const HODHome = (props) => {
         }
 
         const fetchData = async () => {
-            try {
-                const response = await axios.post(url,{
-                    branch
-                });
-                setdata(response.data);
-                console.log(response.data);
-            } catch (error) {
-                console.error(error);
-            }
+          try {
+            const response = await axios.post(url, { department });
+            console.log(department);
+            setdata(response.data);
+          } catch (error) {
+            console.error(error);
+          }
         };
         fetchData();
+      
+
     }, []);
 
-    
 
     const handleOnClick = () => {
         Navigate('/HODupload');
@@ -115,7 +109,8 @@ const HODHome = (props) => {
           )}
         </div>
 
-        <hr />
+        <br />
+        <br />
     </>
     );
 };

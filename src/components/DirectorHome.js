@@ -62,7 +62,6 @@ const DirectorHome = (props) => {
 
     try {
       const response = await axios.post(url, {
-        course,
         department,
         class_name,
       });
@@ -207,7 +206,8 @@ const DirectorHome = (props) => {
           <p>No data available</p>
           )}
         </div>
-        <hr />
+        <br />
+        <br />
         </>
     )
 }
