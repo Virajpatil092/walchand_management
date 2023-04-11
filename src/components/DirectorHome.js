@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import Table from 'react-bootstrap/Table';
 import { useNavigate } from 'react-router-dom';
+import { Card, Table } from 'react-bootstrap';
 
 const DirectorHome = (props) => {
   const Navigate = useNavigate();
@@ -9,6 +9,7 @@ const DirectorHome = (props) => {
   const [class_name, setclass_name] = useState();
   const [course, setcourse] = useState('null');
   const [data, setData] = useState([]);
+  const [obj, setobj] = useState();
 
   useEffect(() => {
 
@@ -43,6 +44,7 @@ const DirectorHome = (props) => {
     fetchData();
   }, []);
 
+
   const handledepartment = (event) => {
     setdepartment(event.target.value);
   };
@@ -73,6 +75,62 @@ const DirectorHome = (props) => {
   };
     return (
         <>
+        {obj && 
+        <div className="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div className="modal-dialog modal-dialog-centered" role="document">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLongTitle">Modal title</h5>
+                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div className="modal-body">
+              <Table striped bordered hover responsive>
+              <thead className='thead-dark'>
+                <tr>
+                  <th>Name</th>
+                  <th>Position</th>
+                  <th>Department</th>
+                  <th>Class Name</th>
+                  <th>Activity Name</th>
+                  <th>Mode of Attendance</th>
+                  <th>Description</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Location</th>
+                  <th>Category</th>
+                  <th>Participants Count</th>
+                  <th>Outcomes</th>
+                  <th>File</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  <>
+                    <td>{obj.name ? obj.name : 'N/A'}</td>
+                    <td>{obj.position ? obj.position : 'N/A'}</td>
+                    <td>{obj.department ? obj.department : 'N/A'}</td>
+                    <td>{obj.class_name ? obj.class_name : 'N/A'}</td>
+                    <td>{obj.activity_name ? obj.activity_name : 'N/A'}</td>
+                    <td>{obj.mode_of_attendance ? obj.mode_of_attendance : 'N/A'}</td>
+                    <td>{obj.description ? obj.description : 'N/A'}</td>
+                    <td>{obj.start_date ? new Date(obj.start_date).toLocaleDateString() : "N/A"}</td>
+                    <td>{obj.end_date ? new Date(obj.end_date).toLocaleDateString() : "N/A"}</td>
+                    <td>{obj.location ? obj.location : 'N/A'}</td>
+                    <td>{obj.category ? obj.category : 'N/A'}</td>
+                    <td>{obj.participants_count ? obj.participants_count : 'N/A'}</td>
+                    <td>{obj.outcomes ? obj.outcomes : 'N/A'}</td>
+                    <td>{obj.file ? obj.file : 'N/A'}</td>
+                    </>
+                }
+              </tbody>
+            </Table>
+              </div>
+            </div>
+          </div>
+        </div>
+        }
         <div className="d-flex p-3">
 
             <select id="course" className="form-select mx-2" aria-label="Default select example" onChange={handlecourse}>
@@ -155,49 +213,27 @@ const DirectorHome = (props) => {
             <button type="button" className={`btn btn-primary ${(course === "null")?'disabled':''}`} onClick={handleonclick}>Add Filter</button>
         </div>
         <div className="my-5">
-          {data ? (
-            <Table striped bordered hover responsive>
-              <thead className='thead-dark'>
-                <tr>
-                  <th>Name</th>
-                  <th>Position</th>
-                  <th>Department</th>
-                  <th>Class Name</th>
-                  <th>Activity Name</th>
-                  <th>Mode of Attendance</th>
-                  <th>Description</th>
-                  <th>Start Date</th>
-                  <th>End Date</th>
-                  <th>Location</th>
-                  <th>Category</th>
-                  <th>Participants Count</th>
-                  <th>Outcomes</th>
-                  <th>File</th>
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((item) => (
-                  <tr key={item.id}>
-                    <td>{item.name ? item.name : 'N/A'}</td>
-                    <td>{item.position ? item.position : 'N/A'}</td>
-                    <td>{item.department ? item.department : 'N/A'}</td>
-                    <td>{item.class_name ? item.class_name : 'N/A'}</td>
-                    <td>{item.activity_name ? item.activity_name : 'N/A'}</td>
-                    <td>{item.mode_of_attendance ? item.mode_of_attendance : 'N/A'}</td>
-                    <td>{item.description ? item.description : 'N/A'}</td>
-                    <td>{item.start_date ? new Date(item.start_date).toLocaleDateString() : "N/A"}</td>
-                    <td>{item.end_date ? new Date(item.end_date).toLocaleDateString() : "N/A"}</td>
-                    <td>{item.location ? item.location : 'N/A'}</td>
-                    <td>{item.category ? item.category : 'N/A'}</td>
-                    <td>{item.participants_count ? item.participants_count : 'N/A'}</td>
-                    <td>{item.outcomes ? item.outcomes : 'N/A'}</td>
-                    <td>{item.file ? item.file : 'N/A'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          ) : (
-            <p>No data available</p>
+      {data ? (
+        <>
+          <div className="row row-cols-1 row-cols-md-3 g-4">
+            {data.slice(0).reverse().map((item) => (
+              <div key={item.id} className="col">
+                <Card className='shadow p-3 mb-5 bg-white rounded'>
+                  <Card.Header>{item.name ? item.name : 'N/A'}</Card.Header>
+                  <Card.Body>
+                    <Card.Title>{item.activity_name ? item.activity_name : 'N/A'}</Card.Title>
+                    <Card.Text>{item.description ? item.description : 'N/A'}</Card.Text>
+                    <button type="button" className="btn btn-primary" onClick={()=>{setobj(item)}} data-toggle="modal" data-target="#exampleModalCenter">View Details</button>
+                  </Card.Body>
+                </Card>
+              </div>
+            ))}
+          </div>
+          
+          </>
+          ):
+          (
+            <></>
           )}
         </div>
         <br />
